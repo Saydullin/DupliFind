@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DupliFind</string>
+    <string name="coin_cd">Coin</string>
+    <string name="play">Play</string>
 </resources>
