@@ -3,26 +3,25 @@ package com.saydullin.duplifind
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.saydullin.duplifind.presentation.components.CoinView
-import com.saydullin.duplifind.presentation.screens.HomeScreen
+import androidx.activity.viewModels
+import com.saydullin.duplifind.presentation.screens.GameScene
 import com.saydullin.duplifind.presentation.ui.theme.DupliFindTheme
+import com.saydullin.duplifind.presentation.viewmodel.GameViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private val gameViewModel: GameViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             DupliFindTheme {
-                HomeScreen()
+                GameScene(
+                    gameViewModel = gameViewModel
+                )
             }
         }
     }

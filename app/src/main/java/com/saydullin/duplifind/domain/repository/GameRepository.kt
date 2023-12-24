@@ -4,6 +4,7 @@ import com.saydullin.duplifind.data.db.dao.GameDao
 import com.saydullin.duplifind.domain.mapper.GameMainEntityMapper
 import com.saydullin.duplifind.domain.mapper.GameMainMapper
 import com.saydullin.duplifind.domain.model.GameMain
+import com.saydullin.duplifind.domain.model.GameObject
 import com.saydullin.duplifind.domain.utils.Resource
 
 interface GameRepository {
@@ -16,4 +17,5 @@ interface GameRepository {
 
     suspend fun saveGame(gameMain: GameMain): Resource<Unit>
 
+    suspend fun updateGame(gameMain: GameMain, gameObject: GameObject): Resource<Unit>
 }

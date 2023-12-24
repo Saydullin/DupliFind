@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class GameMainEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey(autoGenerate = false) val id: Int = 0,
     val expiredSeconds: Int,
     val items: List<GameObjectEntity>,
     val coins: Int,
