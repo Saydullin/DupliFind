@@ -15,16 +15,45 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.saydullin.duplifind.R
+import com.saydullin.duplifind.domain.model.GameMain
 import com.saydullin.duplifind.presentation.components.CoinView
+import com.saydullin.duplifind.presentation.navigation.Screen
+import com.saydullin.duplifind.presentation.utils.GameController
+import com.saydullin.duplifind.presentation.viewmodel.CoinViewModel
+import com.saydullin.duplifind.presentation.viewmodel.GameViewModel
+import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navController: NavController = rememberNavController(),
+    gameViewModel: GameViewModel = hiltViewModel()
+) {
+
+    LaunchedEffect(Dispatchers.IO) {
+        gameViewModel.getGame()
+    }
+
+    val createNewGame = {
+        val gameController = GameController()
+        val newGameObjects = gameController.getGameObjects()
+        val newGame = GameMain(
+            expiredSeconds = 0,
+            items = newGameObjects,
+            coins = 100,
+        )
+        gameViewModel.saveGame(newGame)
+        navController.navigate(Screen.GameScene.route)
+    }
 
     Column(
         modifier = Modifier
@@ -37,7 +66,9 @@ fun HomeScreen() {
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-            CoinView()
+            CoinView(
+                gameViewModel = gameViewModel
+            )
         }
 
         Box(
@@ -61,7 +92,7 @@ fun HomeScreen() {
                 Button(
                     modifier = Modifier
                         .padding(20.dp),
-                    onClick = { /*TODO*/ }
+                    onClick = { createNewGame() }
                 ) {
                     Text(
                         text = stringResource(R.string.play),

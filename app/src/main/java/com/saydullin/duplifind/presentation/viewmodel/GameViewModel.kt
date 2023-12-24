@@ -23,9 +23,15 @@ class GameViewModel @Inject constructor(
 ): ViewModel() {
 
     private val _game = mutableStateOf<GameMain?>(null)
+    private val _isGameOver = mutableStateOf(false)
     private val _error = mutableStateOf<StatusType?>(null)
     val game = _game
+    val isGameOver = _isGameOver
     val error = _error
+
+    fun setGameOver(isOver: Boolean) {
+        _isGameOver.value = isOver
+    }
 
     fun getGame() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,8 +50,6 @@ class GameViewModel @Inject constructor(
             val response = saveGameUseCase.execute(gameMain)
             if (response is Resource.Error || response.data == null) {
                 _error.value = response.statusType
-            } else {
-                getGame()
             }
         }
     }
@@ -55,8 +59,6 @@ class GameViewModel @Inject constructor(
             val response = updateGameUseCase.execute(gameMain, gameObject)
             if (response is Resource.Error || response.data == null) {
                 _error.value = response.statusType
-            } else {
-                getGame()
             }
         }
     }

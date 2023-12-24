@@ -18,14 +18,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.saydullin.duplifind.R
 import com.saydullin.duplifind.presentation.viewmodel.CoinViewModel
+import com.saydullin.duplifind.presentation.viewmodel.GameViewModel
 
 @Composable
 fun CoinView(
     modifier: Modifier = Modifier,
-    coinViewModel: CoinViewModel = hiltViewModel()
+    gameViewModel: GameViewModel = hiltViewModel()
 ) {
 
-    val coin = coinViewModel.coin.intValue
+    val coin = gameViewModel.game.value?.coins
 
     Row(
         modifier = modifier
@@ -41,7 +42,7 @@ fun CoinView(
             contentDescription = stringResource(R.string.coin_cd)
         )
         Text(
-            text = "$coin",
+            text = if (coin == null) stringResource(R.string.no_game_found) else "$coin",
             style = MaterialTheme.typography.titleLarge
         )
     }

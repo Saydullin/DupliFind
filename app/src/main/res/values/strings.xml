@@ -2,4 +2,5 @@
     <string name="app_name">DupliFind</string>
     <string name="coin_cd">Coin</string>
     <string name="play">Play</string>
+    <string name="no_game_found">-</string>
 </resources>
