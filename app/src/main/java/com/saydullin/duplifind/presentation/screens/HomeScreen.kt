@@ -5,12 +5,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
+import androidx.compose.material3.Button
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,11 +27,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.saydullin.duplifind.R
-import com.saydullin.duplifind.domain.model.GameMain
 import com.saydullin.duplifind.presentation.components.CoinView
 import com.saydullin.duplifind.presentation.navigation.Screen
 import com.saydullin.duplifind.presentation.utils.GameController
-import com.saydullin.duplifind.presentation.viewmodel.CoinViewModel
 import com.saydullin.duplifind.presentation.viewmodel.GameViewModel
 import kotlinx.coroutines.Dispatchers
 
@@ -40,19 +40,10 @@ fun HomeScreen(
 ) {
 
     LaunchedEffect(Dispatchers.IO) {
-        gameViewModel.getGame()
-    }
-
-    val createNewGame = {
         val gameController = GameController()
-        val newGameObjects = gameController.getGameObjects()
-        val newGame = GameMain(
-            expiredSeconds = 0,
-            items = newGameObjects,
-            coins = 100,
-        )
+        val newGame = gameController.createNewGame()
+        gameViewModel.setGameOver(false)
         gameViewModel.saveGame(newGame)
-        navController.navigate(Screen.GameScene.route)
     }
 
     Column(
@@ -66,9 +57,7 @@ fun HomeScreen(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-            CoinView(
-                gameViewModel = gameViewModel
-            )
+            CoinView(gameViewModel = gameViewModel)
         }
 
         Box(
@@ -88,15 +77,17 @@ fun HomeScreen(
                     painter = painterResource(R.drawable.logo),
                     contentDescription = stringResource(R.string.coin_cd)
                 )
-
+                Spacer(modifier = Modifier.height(20.dp))
                 Button(
-                    modifier = Modifier
-                        .padding(20.dp),
-                    onClick = { createNewGame() }
+                    onClick = {
+                        navController.navigate(Screen.GameScene.route)
+                    }
                 ) {
                     Text(
+                        modifier = Modifier
+                            .padding(horizontal = 15.dp, vertical = 6.dp),
                         text = stringResource(R.string.play),
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.headlineSmall
                     )
                 }
             }
@@ -115,9 +106,10 @@ fun HomeScreen(
                     modifier = Modifier
                         .width(50.dp)
                         .height(50.dp)
-                        .padding(horizontal = 10.dp),
-                    painter = painterResource(R.drawable.logo),
-                    contentDescription = stringResource(R.string.coin_cd)
+                        .padding(horizontal = 10.dp)
+                        .alpha(.6f),
+                    painter = painterResource(R.drawable.privacy_policy),
+                    contentDescription = stringResource(R.string.privacy_policy_cd)
                 )
             }
         }

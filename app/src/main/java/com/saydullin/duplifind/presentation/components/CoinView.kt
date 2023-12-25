@@ -1,9 +1,7 @@
 package com.saydullin.duplifind.presentation.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -17,7 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.saydullin.duplifind.R
-import com.saydullin.duplifind.presentation.viewmodel.CoinViewModel
 import com.saydullin.duplifind.presentation.viewmodel.GameViewModel
 
 @Composable
@@ -35,14 +32,14 @@ fun CoinView(
     ) {
         Image(
             modifier = Modifier
-                .width(40.dp)
-                .height(40.dp)
+                .width(45.dp)
+                .height(45.dp)
                 .padding(horizontal = 10.dp),
             painter = painterResource(R.drawable.coin),
             contentDescription = stringResource(R.string.coin_cd)
         )
         Text(
-            text = if (coin == null) stringResource(R.string.no_game_found) else "$coin",
+            text = if (coin == null) stringResource(R.string.no_coin_found) else "$coin",
             style = MaterialTheme.typography.titleLarge
         )
     }

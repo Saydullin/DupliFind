@@ -2,9 +2,20 @@ package com.saydullin.duplifind.presentation.utils
 
 import android.annotation.SuppressLint
 import com.saydullin.duplifind.R
+import com.saydullin.duplifind.domain.model.GameMain
 import com.saydullin.duplifind.domain.model.GameObject
 
 class GameController {
+
+    fun createNewGame(): GameMain {
+        val newGameObjects = getGameObjects()
+
+        return GameMain(
+            expiredSeconds = 0,
+            items = newGameObjects,
+            coins = 0,
+        )
+    }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun getIcons(): Set<Pair<Int, String>> {

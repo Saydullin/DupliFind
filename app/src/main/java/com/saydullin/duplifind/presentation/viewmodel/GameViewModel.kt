@@ -50,6 +50,8 @@ class GameViewModel @Inject constructor(
             val response = saveGameUseCase.execute(gameMain)
             if (response is Resource.Error || response.data == null) {
                 _error.value = response.statusType
+            } else {
+                getGame()
             }
         }
     }
@@ -60,6 +62,16 @@ class GameViewModel @Inject constructor(
             if (response is Resource.Error || response.data == null) {
                 _error.value = response.statusType
             }
+        }
+    }
+
+    fun setCoins(coins: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val gameCopy = _game.value?.copy(
+                coins = coins
+            ) ?: return@launch
+
+            saveGame(gameCopy)
         }
     }
 

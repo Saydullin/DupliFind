@@ -2,7 +2,7 @@ package com.saydullin.duplifind.presentation.ui.colors
 
 import androidx.compose.ui.graphics.Color
 
-val md_theme_light_primary = Color(0xFF825500)
+val md_theme_light_primary = Color(0xFFFFBF42)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
 val md_theme_light_primaryContainer = Color(0xFFFFDDB3)
 val md_theme_light_onPrimaryContainer = Color(0xFF291800)
